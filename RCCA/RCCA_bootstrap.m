@@ -1,4 +1,6 @@
-%this funtion give us the optimal alpha base on bootstrap (non-parametric) method 
+%This funtion give the robust estimated CCA direction based on the "best" alpha, where "best" alpha is choose by the non-parametric boostrap method.
+%input: X=[X1 X2] data; K= # of CCA direction; m1=dim of X1; m2=dim of X2; alpha_list=a sequcen fo candidated alphas;
+%u0=intial pt for mean of X; Sigma0=intial pt for Covariance of X; maxiter=max iterations for algorithm 1; num_B=# of bootstrap 
 
 function [rho_a,A_a,B_a,u_a,S21_a,S11_a,S22_a,weight_a,optimal_alpha,MSE_vec]=RCCA_bootstrap(X,K,m1,m2,alpha_list,u0,Sigma0,maxiter,num_B)
 
@@ -28,8 +30,7 @@ function [rho_a,A_a,B_a,u_a,S21_a,S11_a,S22_a,weight_a,optimal_alpha,MSE_vec]=RC
             [~,A_b,B_b,~,~,~,~,~,~]=RCCA_alpha_Divergence(X_bootstrap,m1,m2,alpha,mu,S,K,maxiter);
                    
                    if anynan(A_b)
-
-       
+    
                      error=NaN;
                      b=num_B+1;
                    else
@@ -50,9 +51,8 @@ function [rho_a,A_a,B_a,u_a,S21_a,S11_a,S22_a,weight_a,optimal_alpha,MSE_vec]=RC
    index_optimal=find(MSE_vec==min(MSE_vec));
    optimal_alpha=alpha_list(index_optimal);
 
-
-   disp("optimal alpha is");
-   disp(optimal_alpha);
+   %disp("optimal alpha is");
+   %disp(optimal_alpha);
    save("bestalpha.mat","a");
    [rho_a,A_a,B_a,u_a,S21_a,S11_a,S22_a,weight_a,~]=RCCA_alpha_Divergence(X,m1,m2,optimal_alpha,u0,Sigma0,K,maxiter);
   
