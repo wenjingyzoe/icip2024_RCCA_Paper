@@ -1,7 +1,7 @@
-
+%############# algorithm1 provides the robust estimated covariance matrix when the appropriate alpha value is given.########
 %input: data--X, a--alpha; u0---initial value of u; Sigma0---initial value of Sigma; maxiter--the maximum iteration steps
 %output: estimated mean and sample covariance (details in the paper, see Robust Canonical Correlation Estimation Algorithm)
-
+%##########################################################################################################################
 
 function [u_a,Sigma_a,weight]=algorithm1(X,a,u0,Sigma0,threshold,maxiter)
 
