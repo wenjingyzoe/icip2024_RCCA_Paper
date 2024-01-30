@@ -1,6 +1,7 @@
+%##############################################################################################################################################
 % This function consists of Algorithm 1, which, for a given alpha, gives the corresponding robust estimated covariance matrix.
 % RCCA_alpha_Divergence uses the SVD to decompose the robust estimation covariance matrix and then find the CCA direction.
-
+%##############################################################################################################################################
 
 function [rho_vec,A,B,mu,S21,S11,S22,weight_vec,S]=RCCA_alpha_Divergence(X,m1,m2,alpha,u0,Sigma0,K,maxiter)
   
