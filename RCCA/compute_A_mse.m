@@ -1,3 +1,5 @@
+%Mean square error 
+
 function A_MSE=compute_A_mse(A_T,A_estimated)
 
  K=length(A_T(1,:));
