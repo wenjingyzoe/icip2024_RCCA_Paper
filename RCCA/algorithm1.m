@@ -1,17 +1,15 @@
-%algorithm 1 function: final version 10-07-2023
-%input: data--X
-%a--alpha; u0---initial value of u; Sigma0---initial value of Sigma; 
+
+%input: data--X, a--alpha; u0---initial value of u; Sigma0---initial value of Sigma; maxiter--the maximum iteration steps
+%output: estimated mean and sample covariance (details in the paper, see Robust Canonical Correlation Estimation Algorithm)
 
 function [u_a,Sigma_a,weight_vec]=algorithm1(X,a,u0,Sigma0,threshold,maxiter)
 
- disp("alpha alpha alpha");
- disp(a);
- 
- u_a=u0; % row vecor
+
+ u_a=u0;
  Sigma_a=Sigma0;
  error=10;
- n=length(X(:,1)); %the number of learning data 
- m=length(X(1,:)); %dim of learning data.
+ n=length(X(:,1));  
+ m=length(X(1,:));
  weight=0.5*ones(n,1); 
  num_iter=0;
 
@@ -63,8 +61,6 @@ else
      end
   
 
-
-
      Sigma_a=Sigma_numerator/sum(weight);
 
      if det(Sigma_a)<10e-18
@@ -72,13 +68,8 @@ else
      end
 
      error= vecnorm(weight-w_odd);
-     %diff_u=u_a-u_odd;
-     %error1=norm(diff_u);
-     %diff_Sigma=abs(Sigma_a-Sigma_odd);
-     %error2=norm(diff_Sigma,"fro");
-     %error=(error1+error2)/2;
-     disp(error)
-
+    
+   
      if num_iter>maxiter
 
          disp("algorithm has not convergent, choose different alpha")
