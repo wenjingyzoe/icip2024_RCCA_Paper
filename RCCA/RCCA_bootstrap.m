@@ -1,6 +1,9 @@
+%###############################################################################################################################################%
 %This funtion give the robust estimated CCA direction based on the "best" alpha, where "best" alpha is choose by the non-parametric boostrap method.
 %input: X=[X1 X2] data; K= # of CCA direction; m1=dim of X1; m2=dim of X2; alpha_list=a sequcen fo candidated alphas;
 %u0=intial pt for mean of X; Sigma0=intial pt for Covariance of X; maxiter=max iterations for algorithm 1; num_B=# of bootstrap 
+%###############################################################################################################################################%
+
 
 function [rho_a,A_a,B_a,u_a,S21_a,S11_a,S22_a,weight_a,optimal_alpha,MSE_vec]=RCCA_bootstrap(X,K,m1,m2,alpha_list,u0,Sigma0,maxiter,num_B)
 
