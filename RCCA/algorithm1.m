@@ -2,31 +2,34 @@
 %input: data--X, a--alpha; u0---initial value of u; Sigma0---initial value of Sigma; maxiter--the maximum iteration steps
 %output: estimated mean and sample covariance (details in the paper, see Robust Canonical Correlation Estimation Algorithm)
 
-function [u_a,Sigma_a,weight_vec]=algorithm1(X,a,u0,Sigma0,threshold,maxiter)
+
+function [u_a,Sigma_a,weight]=algorithm1(X,a,u0,Sigma0,threshold,maxiter)
 
 
- u_a=u0;
+ u_a=u0; 
  Sigma_a=Sigma0;
  error=10;
  n=length(X(:,1));  
  m=length(X(1,:));
- weight=0.5*ones(n,1); 
+ weight=ones(n,1); 
  num_iter=0;
-
+ 
+%#############if alpha=1, it gives MLE of mean and covariance matrix################
 if a==1
      u_a=mean(X,1);
      ua_matrix=repmat(u_a,n,1);
      X_center=X-ua_matrix;
      Sigma_a=(transpose(X_center)*X_center)/n;
-     weight_vec=ones(n,1);
+     weight=ones(n,1);
 
 else
+
 
    while error>threshold
 
      num_iter=num_iter+1;
      
-     w_odd=weight;
+     %w_odd=weight;
      u_odd=u_a;
      Sigma_odd=Sigma_a;    
     
@@ -61,30 +64,35 @@ else
      end
   
 
+
+
      Sigma_a=Sigma_numerator/sum(weight);
 
      if det(Sigma_a)<10e-18
         Sigma_a=Sigma_a+0.01*eye(m);
      end
 
-     error= vecnorm(weight-w_odd);
     
-   
+     diff_u=u_a-u_odd;
+     error1=norm(diff_u);
+     diff_Sigma=abs(Sigma_a-Sigma_odd);
+     error2=norm(diff_Sigma,"fro");
+     error=(error1+error2)/2;
+     
+     %disp(error)
+
      if num_iter>maxiter
 
          disp("algorithm has not convergent, choose different alpha")
          u_a=NaN(1,1);
          Sigma_a=NaN(1,1);
-         weight_vec=NaN(1,1);
+         weight=NaN(1,1);
          break
          
      end
 
    end
-
-    weight_vec=weight;
-    %weight_vec=weight/sum(weight);
-
+ 
  end
 
 end
